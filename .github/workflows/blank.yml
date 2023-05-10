@@ -1,0 +1,28 @@
+import requests
+import json
+
+url = 'https://www.openfootballapi.com/api/v1/json'
+competition_id = '2022' # ID-ul competiției pentru Premier League
+matchday = '5' # etapa actuală
+
+r = requests.get(f'{url}/{competition_id}/{matchday}.json')
+data = json.loads(r.text)
+
+# Parcurge toate meciurile din etapa curentă
+for match in data['matches']:
+    home_team = match['home_team']
+    away_team = match['away_team']
+    home_score = match['home_score']
+    away_score = match['away_score']
+
+    # Analizează datele pentru a determina rata de câștig a fiecărei echipe
+    # și afișează-o sub formă de procentaj
+    win_percentage = (home_score / (home_score + away_score)) * 100
+    print(f'{home_team} are o probabilitate de câștig de {win_percentage}% împotriva echipei {away_team}')
+
+# Definește testul myCodeMirrorResult
+def myCodeMirrorResult():
+    return data
+
+# Rulează testul
+print(myCodeMirrorResult())
